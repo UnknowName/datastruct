@@ -1,5 +1,7 @@
 /*
     线性表的链表实现
+    version: 1
+    Tags: 学渣第一式
 */
 #include <iostream>
 using namespace std;
@@ -69,7 +71,34 @@ void show_linklist(LinkList *head){
         int num = data.data;
         printf("num is %d\n", num);
     };
-}
+};
+
+// 删除操作
+int delete_linklist(LinkList *head, int i){
+    // 对i限制不能少于0
+    if (i <= 0 ){
+        printf("I invalid\n");
+        return 1;
+    };
+    // 定位i的前一个节点
+    int j = 0;
+    LinkList *del_node = head, *pre_node;
+    while (head -> next != NULL){
+        pre_node = head;
+        if (j == i - 1 && pre_node -> next != NULL){
+            pre_node = head;
+            del_node = pre_node -> next;
+            pre_node -> next = del_node -> next;
+            free(del_node);
+            printf("find it\n");
+            return 1;
+        };
+        head = head -> next;
+        j += 1;
+    };
+    printf("Not find\n");
+    return 0;
+};
 
 int main(){
     LinkList *linklist;
@@ -82,5 +111,9 @@ int main(){
     insert_linklist(linklist, 2, add_node);
     len = get_length(linklist);
     printf("length is %d\n", len);
+    // 删除前查找链表内容
+    show_linklist(linklist);
+    delete_linklist(linklist, 2);
+    // 删除后再次查找里面内容
     show_linklist(linklist);
 };
